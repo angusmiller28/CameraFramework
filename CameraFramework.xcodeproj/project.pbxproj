@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1FE0AC09200DE3540031853C /* CameraFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FE0AC07200DE3540031853C /* CameraFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1FE0AC3A200DE6E00031853C /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE0AC39200DE6E00031853C /* CameraViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,6 +26,7 @@
 		1FE0AC07200DE3540031853C /* CameraFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraFramework.h; sourceTree = "<group>"; };
 		1FE0AC08200DE3540031853C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1FE0AC2D200DE39A0031853C /* SampleApplication.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SampleApplication.xcodeproj; path = SampleApplication/SampleApplication.xcodeproj; sourceTree = "<group>"; };
+		1FE0AC39200DE6E00031853C /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 			children = (
 				1FE0AC07200DE3540031853C /* CameraFramework.h */,
 				1FE0AC08200DE3540031853C /* Info.plist */,
+				1FE0AC39200DE6E00031853C /* CameraViewController.swift */,
 			);
 			path = CameraFramework;
 			sourceTree = "<group>";
@@ -115,6 +118,7 @@
 				TargetAttributes = {
 					1FE0AC03200DE3540031853C = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -167,6 +171,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FE0AC3A200DE6E00031853C /* CameraViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,6 +294,7 @@
 		1FE0AC0D200DE3540031853C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -301,6 +307,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.angus.CameraFramework;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -309,6 +316,7 @@
 		1FE0AC0E200DE3540031853C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
