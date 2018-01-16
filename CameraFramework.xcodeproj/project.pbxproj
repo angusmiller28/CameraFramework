@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1FD1F0C9200E198E0089E0F7 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1F0C8200E198E0089E0F7 /* Camera.swift */; };
+		1FD1F0CC200E2C930089E0F7 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FD1F0CB200E2C930089E0F7 /* Media.xcassets */; };
 		1FE0AC09200DE3540031853C /* CameraFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FE0AC07200DE3540031853C /* CameraFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1FE0AC3A200DE6E00031853C /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE0AC39200DE6E00031853C /* CameraViewController.swift */; };
 /* End PBXBuildFile section */
@@ -22,6 +24,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1FD1F0C8200E198E0089E0F7 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		1FD1F0CB200E2C930089E0F7 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		1FE0AC04200DE3540031853C /* CameraFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CameraFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FE0AC07200DE3540031853C /* CameraFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraFramework.h; sourceTree = "<group>"; };
 		1FE0AC08200DE3540031853C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -63,6 +67,8 @@
 				1FE0AC07200DE3540031853C /* CameraFramework.h */,
 				1FE0AC08200DE3540031853C /* Info.plist */,
 				1FE0AC39200DE6E00031853C /* CameraViewController.swift */,
+				1FD1F0C8200E198E0089E0F7 /* Camera.swift */,
+				1FD1F0CB200E2C930089E0F7 /* Media.xcassets */,
 			);
 			path = CameraFramework;
 			sourceTree = "<group>";
@@ -161,6 +167,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FD1F0CC200E2C930089E0F7 /* Media.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,6 +178,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FD1F0C9200E198E0089E0F7 /* Camera.swift in Sources */,
 				1FE0AC3A200DE6E00031853C /* CameraViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,102 +9,147 @@
 import UIKit
 import AVFoundation
 
+
+public protocol CameraControllerDelegate {
+    func cancelButtonTapped(controller: CameraViewController)
+}
 public enum CameraPosition {
     case front
     case back
 }
 
 public final class CameraViewController: UIViewController {
-    public var position: CameraPosition = .back
+    fileprivate var camera: Camera?
+    var previewLayer: AVCaptureVideoPreviewLayer?
     
-    var session = AVCaptureSession()
-    var discoverySession:AVCaptureDevice.DiscoverySession? {
-        return AVCaptureDevice.DiscoverySession(deviceTypes: [AVCaptureDevice.DeviceType.builtInDualCamera], mediaType: AVMediaType.video, position: AVCaptureDevice.Position.unspecified)
+    private var _cancelButton: UIButton?
+    var cancelButton: UIButton {
+        if let currentButton = _cancelButton {
+            return currentButton
         }
-    var videoInput: AVCaptureDeviceInput?
-    var videoOutput = AVCaptureVideoDataOutput()
+        let button = UIButton(frame: CGRect(x: self.view.frame.minX + 10, y: self.view.frame.minY - 50, width: 70, height: 30))
+        button.setTitle("Cancel", for: .normal)
+        button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        return button
+    }
+    
+    private var _shutterButton: UIButton?
+    var shutterButton: UIButton {
+        if let currentButton = _shutterButton {
+            return currentButton
+        }
+        let button = UIButton()
+        button.setImage(UIImage(named: "trigger*", in: Bundle(for: CameraViewController.self), compatibleWith: nil), for: .normal)
+        button.addTarget(self, action: #selector(shutterButtonTapped), for: .touchUpInside)
+        _shutterButton = button
+        return button
+    }
+    
+    open var delegate: CameraControllerDelegate?
+    
+    open var position: CameraPosition = .back {
+        didSet {
+            guard let camera = self.camera else {
+                return
+            }
+            camera.position = position
+        }
+    }
     
     public init(){
         super.init(nibName: nil, bundle: nil)
+        let camera = Camera(with: self)
+        camera.delegate = self
+        self.camera = camera
     }
     
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        guard let camera = self.camera else {
+            return
+        }
         createUI()
-        commitConfiguration()
+        camera.update()
     }
+    
+    public override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        updateUI(orientation: UIApplication.shared.statusBarOrientation)
+        updateButtonFrames()
+    }
+    
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    func getPreviewLayer(session: AVCaptureSession) -> AVCaptureVideoPreviewLayer {
-        let previewLayer = AVCaptureVideoPreviewLayer(session: self.session)
-        previewLayer.frame = self.view.bounds
-        previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        return previewLayer
-    }
-    
-    func getDevice(with position: AVCaptureDevice.Position) -> AVCaptureDevice? {
-        guard let discoverySession = self.discoverySession else {
-            return nil
-        }
-        
-        for device in discoverySession.devices {
-            if device.position == position {
-                return device
-            }
-        }
-        return nil
-    }
-    
-    override public func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
-    }
-    
-    override public func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+}
+
+// MARK: User Interface Creation
+
+fileprivate extension CameraViewController {
     func createUI(){
-        self.view.layer.addSublayer(getPreviewLayer(session: self.session))
-    }
-    
-    func commitConfiguration(){
-        if let currentInput = self.videoInput {
-            self.session.removeInput(currentInput)
-            self.session.removeOutput(self.videoOutput)
-        }
-        do {
-            guard let device = getDevice(with: self.position == .front ? AVCaptureDevice.Position.front : AVCaptureDevice.Position.back) else {
-                return
-            }
-            let input = try AVCaptureDeviceInput(device: device)
-            if self.session.canAddInput(input) &&
-               self.session.canAddOutput(self.videoOutput)
-            {
-                self.videoInput = input
-                self.session.addInput(input)
-                self.session.addOutput(self.videoOutput)
-                self.session.commitConfiguration()
-                self.session.startRunning()
-            }
-        } catch {
-            print("Error linking device to AVInput!")
+        guard let camera = self.camera else {
             return
         }
+        guard let previewLayer = camera.getPreviewLayer() else {
+            return
+        }
+        
+        self.previewLayer = previewLayer
+        self.view.layer.addSublayer(previewLayer)
+        self.view.addSubview(self.cancelButton)
+        self.view.addSubview(self.shutterButton)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func updateUI(orientation: UIInterfaceOrientation){
+        guard let previewLayer = self.previewLayer, let connection = previewLayer.connection else {
+            return
+        }
+        previewLayer.frame = self.view.bounds
+        
+        switch orientation {
+        case .portrait:
+            connection.videoOrientation = .portrait
+            break
+        case .landscapeLeft:
+            connection.videoOrientation = .landscapeLeft
+            break
+        case .landscapeRight:
+            connection.videoOrientation = .landscapeRight
+            break
+        case .portraitUpsideDown:
+            connection.videoOrientation = .portraitUpsideDown
+            break
+        default:
+            connection.videoOrientation = .portrait
+        }
     }
-    */
+    
+    func updateButtonFrames(){
+        self.cancelButton.frame = CGRect(x: self.view.frame.minX + 10, y: self.view.frame.minY - 50, width: 70, height: 30)
+        self.shutterButton.frame = CGRect(x: self.view.frame.midX - 35, y: self.view.frame.maxY - 80, width: 70, height: 70)
+    }
+}
 
+// MARK: UIButton functions
+
+fileprivate extension CameraViewController {
+    @objc func cancelButtonTapped(){
+        if let delegate = self.delegate {
+            delegate.cancelButtonTapped(controller: self)
+        }
+    }
+    
+    @objc func shutterButtonTapped(){
+        if let camera = self.camera {
+            camera.captureStillImage();
+        }
+    }
+}
+
+// MARK: CameraDelegate Functions
+
+extension CameraViewController : CameraDelegate {
+    func stillImageCaptured(camera: Camera, image: UIImage) {
+        print("Camera button tapped")
+    }
 }
