@@ -10,10 +10,21 @@
 		1FE0AC09200DE3540031853C /* CameraFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FE0AC07200DE3540031853C /* CameraFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		1FE0AC31200DE39C0031853C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FE0AC2D200DE39A0031853C /* SampleApplication.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1FE0AC18200DE39A0031853C;
+			remoteInfo = SampleApplication;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		1FE0AC04200DE3540031853C /* CameraFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CameraFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FE0AC07200DE3540031853C /* CameraFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraFramework.h; sourceTree = "<group>"; };
 		1FE0AC08200DE3540031853C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1FE0AC2D200DE39A0031853C /* SampleApplication.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SampleApplication.xcodeproj; path = SampleApplication/SampleApplication.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -30,6 +41,7 @@
 		1FE0ABFA200DE3540031853C = {
 			isa = PBXGroup;
 			children = (
+				1FE0AC2D200DE39A0031853C /* SampleApplication.xcodeproj */,
 				1FE0AC06200DE3540031853C /* CameraFramework */,
 				1FE0AC05200DE3540031853C /* Products */,
 			);
@@ -50,6 +62,14 @@
 				1FE0AC08200DE3540031853C /* Info.plist */,
 			);
 			path = CameraFramework;
+			sourceTree = "<group>";
+		};
+		1FE0AC2E200DE39A0031853C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1FE0AC32200DE39C0031853C /* SampleApplication.app */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -109,12 +129,28 @@
 			mainGroup = 1FE0ABFA200DE3540031853C;
 			productRefGroup = 1FE0AC05200DE3540031853C /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 1FE0AC2E200DE39A0031853C /* Products */;
+					ProjectRef = 1FE0AC2D200DE39A0031853C /* SampleApplication.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				1FE0AC03200DE3540031853C /* CameraFramework */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		1FE0AC32200DE39C0031853C /* SampleApplication.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = SampleApplication.app;
+			remoteRef = 1FE0AC31200DE39C0031853C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1FE0AC02200DE3540031853C /* Resources */ = {
